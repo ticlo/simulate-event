@@ -32,7 +32,12 @@ var eventOptions = {
     }
   },
   WheelEvent: function (type) {
-    return eventOptions.MouseEvent.apply(this, arguments)
+    return extend(eventOptions.MouseEvent.apply(this, arguments), {
+      deltaX: 0,
+      deltaY: 0,
+      deltaZ: 0,
+      deltaMode: 0
+    })
   },
   KeyboardEvent: function () {
     return {
@@ -167,7 +172,7 @@ var eventInit = {
   UIEvent: 'initUIEvent',
   FocusEvent: 'initUIEvent',
   MouseEvent: 'initMouseEvent',
-  WheelEvent: 'initMouseEvent',
+  WheelEvent: 'initWheelEvent',
   MessageEvent: 'initMessageEvent',
   StorageEvent: 'initStorageEvent',
   KeyboardEvent: 'initKeyboardEvent',
@@ -223,6 +228,24 @@ var eventParameters = {
     'metaKey',
     'button',
     'relatedTarget'
+  ],
+  initWheelEvent: [
+    'view',
+    'detail',
+    'screenX',
+    'screenY',
+    'clientX',
+    'clientY',
+    'ctrlKey',
+    'altKey',
+    'shiftKey',
+    'metaKey',
+    'button',
+    'relatedTarget',
+    'deltaX,
+    'deltaY',
+    'deltaZ',
+    'deltaMode'
   ],
   initHashChangeEvent: [
     'oldURL',
