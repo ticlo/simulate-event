@@ -242,7 +242,7 @@ var eventParameters = {
     'metaKey',
     'button',
     'relatedTarget',
-    'deltaX,
+    'deltaX',
     'deltaY',
     'deltaZ',
     'deltaMode'
