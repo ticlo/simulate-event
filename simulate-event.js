@@ -229,7 +229,7 @@ var eventParameters = {
     'metaKey',
     'button',
     'relatedTarget',
-    'dataTransfer
+    'dataTransfer'
   ],
   initMouseEvent: [
     'view',
