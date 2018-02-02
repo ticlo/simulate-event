@@ -328,6 +328,12 @@ function getOverrides (eventType, options) {
       which: options.which || options.keyCode || 0
     }
   }
+  
+  if (eventType === 'DragEvent' && options) {
+    return {
+      dataTransfer: options.dataTransfer
+    }
+  }
 }
 
 /**
