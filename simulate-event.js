@@ -243,7 +243,8 @@ var eventParameters = {
     'shiftKey',
     'metaKey',
     'button',
-    'relatedTarget'
+    'relatedTarget',
+    'dataTransfer'
   ],
   initWheelEvent: [
     'view',
