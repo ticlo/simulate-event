@@ -32,7 +32,12 @@ var eventOptions = {
     }
   },
   WheelEvent: function (type) {
-    return eventOptions.MouseEvent.apply(this, arguments)
+    return extend(eventOptions.MouseEvent.apply(this, arguments), {
+      deltaX: 0,
+      deltaY: 0,
+      deltaZ: 0,
+      deltaMode: 0
+    })
   },
   KeyboardEvent: function () {
     return {
@@ -108,13 +113,13 @@ var eventTypes = {
   resize: 'UIEvent',
   scroll: 'UIEvent',
   select: 'UIEvent',
-  drag: 'MouseEvent',
-  dragenter: 'MouseEvent',
-  dragleave: 'MouseEvent',
-  dragover: 'MouseEvent',
-  dragstart: 'MouseEvent',
-  dragend: 'MouseEvent',
-  drop: 'MouseEvent',
+  drag: 'DragEvent',
+  dragenter: 'DragEvent',
+  dragleave: 'DragEvent',
+  dragover: 'DragEvent',
+  dragstart: 'DragEvent',
+  dragend: 'DragEvent',
+  drop: 'DragEvent',
   touchcancel: 'UIEvent',
   touchend: 'UIEvent',
   touchenter: 'UIEvent',
@@ -166,8 +171,9 @@ var eventInit = {
   Event: 'initEvent',
   UIEvent: 'initUIEvent',
   FocusEvent: 'initUIEvent',
+  DragEvent: 'initDragEvent',
   MouseEvent: 'initMouseEvent',
-  WheelEvent: 'initMouseEvent',
+  WheelEvent: 'initWheelEvent',
   MessageEvent: 'initMessageEvent',
   StorageEvent: 'initStorageEvent',
   KeyboardEvent: 'initKeyboardEvent',
@@ -210,6 +216,21 @@ var eventParameters = {
     'keyCode',
     'charCode'
   ],
+  initDragEvent: [
+    'view',
+    'detail',
+    'screenX',
+    'screenY',
+    'clientX',
+    'clientY',
+    'ctrlKey',
+    'altKey',
+    'shiftKey',
+    'metaKey',
+    'button',
+    'relatedTarget',
+    'dataTransfer'
+  ],
   initMouseEvent: [
     'view',
     'detail',
@@ -222,7 +243,26 @@ var eventParameters = {
     'shiftKey',
     'metaKey',
     'button',
-    'relatedTarget'
+    'relatedTarget',
+    'dataTransfer'
+  ],
+  initWheelEvent: [
+    'view',
+    'detail',
+    'screenX',
+    'screenY',
+    'clientX',
+    'clientY',
+    'ctrlKey',
+    'altKey',
+    'shiftKey',
+    'metaKey',
+    'button',
+    'relatedTarget',
+    'deltaX',
+    'deltaY',
+    'deltaZ',
+    'deltaMode'
   ],
   initHashChangeEvent: [
     'oldURL',
@@ -269,8 +309,9 @@ var eventConstructors = {
   UIEvent: window.UIEvent,
   FocusEvent: window.FocusEvent,
   MouseEvent: window.MouseEvent,
-  WheelEvent: window.MouseEvent,
-  KeyboardEvent: window.KeyboardEvent
+  WheelEvent: window.WheelEvent || window.MouseEvent,
+  KeyboardEvent: window.KeyboardEvent,
+  DragEvent: window.DragEvent || window.MouseEvent,
 }
 
 /**
@@ -285,6 +326,12 @@ function getOverrides (eventType, options) {
       keyCode: options.keyCode || 0,
       key: options.key || 0,
       which: options.which || options.keyCode || 0
+    }
+  }
+  
+  if (eventType === 'DragEvent' && options) {
+    return {
+      dataTransfer: options.dataTransfer
     }
   }
 }
