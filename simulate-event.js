@@ -31,6 +31,18 @@ var eventOptions = {
       relatedTarget: document.documentElement
     }
   },
+  PointerEvent: function (type) {
+    return extend(eventOptions.MouseEvent.apply(this, arguments), {
+      pointerType: 'mouse',
+      pointerId: 0,
+      isPrimary: true,
+      width: 1,
+      height: 1,
+      tiltX: 0,
+      tiltY: 0,
+      twist: 0
+    })
+  },
   WheelEvent: function (type) {
     return extend(eventOptions.MouseEvent.apply(this, arguments), {
       deltaX: 0,
@@ -120,6 +132,14 @@ var eventTypes = {
   dragstart: 'DragEvent',
   dragend: 'DragEvent',
   drop: 'DragEvent',
+  pointerover: 'PointerEvent',
+  pointerenter: 'PointerEvent',
+  pointerdown: 'PointerEvent',
+  pointermove: 'PointerEvent',
+  pointerup: 'PointerEvent',
+  pointercancel: 'PointerEvent',
+  pointerout: 'PointerEvent',
+  pointerleave: 'PointerEvent',
   touchcancel: 'UIEvent',
   touchend: 'UIEvent',
   touchenter: 'UIEvent',
