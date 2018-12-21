@@ -329,6 +329,7 @@ var eventConstructors = {
   UIEvent: window.UIEvent,
   FocusEvent: window.FocusEvent,
   MouseEvent: window.MouseEvent,
+  PointerEvent: window.PointerEvent,
   WheelEvent: window.WheelEvent || window.MouseEvent,
   KeyboardEvent: window.KeyboardEvent,
   DragEvent: window.DragEvent || window.MouseEvent,
