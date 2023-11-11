@@ -1,6 +1,6 @@
 {
   "name": "simulate-event",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "A library for triggering DOM events.",
   "main": "simulate-event.js",
   "typings": "simulate-event.d.ts",
@@ -67,6 +67,5 @@
     "uglifyify": "^1.0.1"
   },
   "dependencies": {
-    "xtend": "^4.0.1"
   }
 }

@@ -1,11 +1,25 @@
-var extend = require('xtend/mutable')
+const hasOwnProperty = Object.prototype.hasOwnProperty
+
+function extend(target) {
+  for (let i = 1; i < arguments.length; i++) {
+    const source = arguments[i]
+
+    for (const key in source) {
+      if (hasOwnProperty.call(source, key)) {
+        target[key] = source[key]
+      }
+    }
+  }
+
+  return target
+}
 
 /**
  * Set some default options.
  *
  * @type {Object}
  */
-var eventOptions = {
+const eventOptions = {
   UIEvent: function () {
     return {
       view: document.defaultView
@@ -68,7 +82,7 @@ var eventOptions = {
  *
  * @type {Object}
  */
-var eventTypes = {
+const eventTypes = {
   beforeprint: 'Event',
   afterprint: 'Event',
   beforeunload: 'Event',
@@ -187,7 +201,7 @@ var eventTypes = {
  *
  * @type {Object}
  */
-var eventInit = {
+const eventInit = {
   Event: 'initEvent',
   UIEvent: 'initUIEvent',
   FocusEvent: 'initUIEvent',
@@ -212,7 +226,7 @@ var eventInit = {
  *
  * @type {Object}
  */
-var eventParameters = {
+const eventParameters = {
   initEvent: [],
   initUIEvent: [
     'view',
@@ -325,7 +339,7 @@ var eventParameters = {
  *
  * @type {Object}
  */
-var eventConstructors = {
+const eventConstructors = {
   UIEvent: window.UIEvent,
   FocusEvent: window.FocusEvent,
   MouseEvent: window.MouseEvent,
@@ -349,7 +363,7 @@ function getOverrides (eventType, options) {
       which: options.which || options.keyCode || 0
     }
   }
-  
+
   if (eventType === 'DragEvent' && options) {
     return {
       dataTransfer: options.dataTransfer
@@ -364,7 +378,7 @@ function getOverrides (eventType, options) {
  * @param  {Object}  options
  * @return {Event}
  */
-exports.generate = function (type, options) {
+export function generate(type, options) {
   // Immediately throw an error when the event name does not translate.
   if (!eventTypes.hasOwnProperty(type)) {
     throw new SyntaxError('Unsupported event type')
@@ -484,8 +498,8 @@ exports.generate = function (type, options) {
  * @param  {Object}  options
  * @return {Boolean}
  */
-exports.simulate = function (element, type, options) {
-  var event = exports.generate(type, options)
+export function simulate(element, type, options) {
+  var event = generate(type, options)
 
   // In < IE9, the `createEvent` function is not available and we have to
   // resort to using `fireEvent`.
